@@ -7,6 +7,6 @@ import { readFileSync } from 'fs';
  */
 export function getFileLines(filename: string): string[] {
   const file = readFileSync(filename, 'utf-8');
-  const lines = file.split('\n');
+  const lines = file.split('\r\n');
   return lines;
 }
