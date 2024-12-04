@@ -1,7 +1,7 @@
-import { runDay3Part2 } from './day3/day3-part2';
+import { runDay4Part2 } from './day4/day4-part2';
 
 async function main() {
-  await runDay3Part2();
+  await runDay4Part2();
 }
 
 main();
