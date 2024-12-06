@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
+import { getFilepathRoot } from '../../utils/file-utilities';
 
-const filepath = 'src/day3/memory.txt';
+const filepath = getFilepathRoot() + 'day3/memory.txt';
 
 export async function runDay3Part1(): Promise<void> {
   const fileContents = readFileSync(filepath, 'utf-8');

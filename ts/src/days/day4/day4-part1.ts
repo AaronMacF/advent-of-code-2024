@@ -1,6 +1,6 @@
-import { getFileLines } from '../utils/file-utilities';
+import { getFileLines, getFilepathRoot } from '../../utils/file-utilities';
 
-const filepath = 'src/day4/word-search.txt';
+const filepath = getFilepathRoot() + 'day4/word-search.txt';
 
 type Coordinates = [i: number, j: number];
 

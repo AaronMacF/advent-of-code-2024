@@ -10,3 +10,11 @@ export function getFileLines(filename: string): string[] {
   const lines = file.split('\r\n');
   return lines;
 }
+
+/**
+ *
+ * @returns The start of the filepath for days' solutions
+ */
+export function getFilepathRoot(): string {
+  return 'ts/src/days/';
+}

@@ -1,8 +1,8 @@
-import { getFileLines } from '../utils/file-utilities';
+import { getFileLines, getFilepathRoot } from '../../utils/file-utilities';
 
-const filename = 'src/day2/reports.txt';
+const filename = getFilepathRoot() + 'day2/reports.txt';
 
-export async function runDay2Part2(): Promise<void> {
+export async function runDay2Part1(): Promise<void> {
   const lines = getFileLines(filename);
 
   let safeReports = 0;
@@ -18,28 +18,17 @@ export async function runDay2Part2(): Promise<void> {
 
 function isReportSafe(report: string): boolean {
   const levels = report.split(' ').map(Number);
-  const potentialReports: number[][] = [];
 
-  // get all possible reports with one element removed
-  for (let i = 0; i < levels.length; i++) {
-    const reportWithoutLevel = [...levels];
-    reportWithoutLevel.splice(i, 1);
-    potentialReports.push(reportWithoutLevel);
+  if (
+    !isListIncreasingOrDecreasing(levels, 'increasing') &&
+    !isListIncreasingOrDecreasing(levels, 'decreasing')
+  ) {
+    return false;
   }
-
-  // don't need to include initial 'levels' - if that works, removing the first level will also work
-  return potentialReports.some((reportLevels) => {
-    if (
-      !isListIncreasingOrDecreasing(reportLevels, 'increasing') &&
-      !isListIncreasingOrDecreasing(reportLevels, 'decreasing')
-    ) {
-      return false;
-    }
-    if (!adjacentNumbersInListDifferCorrectly(reportLevels)) {
-      return false;
-    }
-    return true;
-  });
+  if (!adjacentNumbersInListDifferCorrectly(levels)) {
+    return false;
+  }
+  return true;
 }
 
 function isListIncreasingOrDecreasing(

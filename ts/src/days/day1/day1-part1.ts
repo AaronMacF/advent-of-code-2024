@@ -1,6 +1,6 @@
-import { getFileLines } from '../utils/file-utilities';
+import { getFileLines, getFilepathRoot } from '../../utils/file-utilities';
 
-const filename = 'src/day1/location-list.txt';
+const filename = getFilepathRoot() + 'day1/location-list.txt';
 
 export async function runDay1Part1(): Promise<void> {
   const list1: number[] = [];
