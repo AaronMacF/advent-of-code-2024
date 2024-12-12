@@ -1,7 +1,9 @@
 .env
 .vscode
 
+# ts
 node_modules/
-
 dist/
 
+# python
+__pycache__
