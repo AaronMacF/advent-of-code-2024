@@ -1,5 +1,6 @@
 .env
-.vscode
+.vscode/*
+!.vscode/launch.json
 
 # ts
 node_modules/
