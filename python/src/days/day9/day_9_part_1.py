@@ -1,28 +1,8 @@
-from abc import ABC, abstractmethod
 from math import floor
 from typing import List
+
+from days.day9.block import Block, FileBlock, FreeBlock
 from utils.file_utilities import get_root_filepath
-
-
-class Block(ABC):
-    @abstractmethod
-    def get_block_type(self) -> str:
-        pass
-
-
-class FreeBlock(Block):
-    def get_block_type(self) -> str:
-        return "free"
-
-
-class FileBlock(Block):
-    id: int
-
-    def __init__(self, id: int):
-        self.id = id
-
-    def get_block_type(self) -> str:
-        return "file"
 
 
 class Disk:
@@ -45,19 +25,19 @@ class Disk:
         return self.file_blocks[self.current_pos]
 
     def current_file_block_type(self) -> str:
-        return self.current_file_block().get_block_type()
+        return self.current_file_block().block_type
 
     def get_last_file_block(self) -> Block:
         # Removes blocks from the end until a file block is found
         while True:
             last_block = self.file_blocks.pop()
-            if last_block.get_block_type() == "file":
+            if last_block.block_type == "file":
                 return last_block
 
     def calculate_checksum(self) -> int:
         checksum = 0
         for i, block in enumerate(self.file_blocks):
-            assert block.get_block_type() == "file"
+            assert block.block_type == "file"
             checksum += block.id * (i)
         return checksum
 
