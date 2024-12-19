@@ -1,7 +1,13 @@
-from typing import Any, Callable, Generic, TypeVar
+from typing import Generic, TypeVar, Union
 
 
 T = TypeVar("T")
+CARDINAL_DIRECTIONS: list[tuple[int, int]] = [
+    (-1, 0),
+    (0, 1),
+    (1, 0),
+    (0, -1),
+]
 
 
 class Point(Generic[T]):
@@ -35,16 +41,19 @@ class Grid(Generic[T]):
         )
 
     def cardinal_neighbours(self, point: Point[T]) -> list[Point[T]]:
-        cardinal_directions: list[tuple[int, int]] = [
-            (0, 1),
-            (1, 0),
-            (0, -1),
-            (-1, 0),
+        return [
+            neighbour
+            for neighbour in self.cardinal_neighbours_or_none(point)
+            if neighbour is not None
         ]
-        next_valid_positions: list[Point[T]] = []
-        for direction in cardinal_directions:
-            coords = (point.row + direction[0], point.col + direction[1])
-            if self.are_coords_in_grid(coords):
-                next_valid_positions.append(self.points[coords[0]][coords[1]])
 
-        return next_valid_positions
+    def cardinal_neighbours_or_none(
+        self, point: Point[T]
+    ) -> list[Union[Point[T], None]]:
+        return [self.move(point, direction) for direction in CARDINAL_DIRECTIONS]
+
+    def move(self, point: Point[T], vector: tuple[int, int]) -> Union[Point[T], None]:
+        coords = (point.row + vector[0], point.col + vector[1])
+        if self.are_coords_in_grid(coords):
+            return self.points[coords[0]][coords[1]]
+        return None
