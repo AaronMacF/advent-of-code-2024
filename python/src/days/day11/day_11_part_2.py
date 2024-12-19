@@ -1,9 +1,8 @@
+from functools import cache
 from time import time
 
 test_initial_arrangement = "125 17"
 initial_arrangement = "28591 78 0 3159881 4254 524155 598 1"
-
-stone_length_lookup: dict[tuple[int, int], int] = dict()
 
 
 def run_day_11_part_2():
@@ -18,12 +17,10 @@ def run_day_11_part_2():
     print(f"Time taken: {time_taken}")
 
 
+@cache
 def number_of_final_stones(stone: int, number_of_iterations: int) -> int:
     if number_of_iterations == 0:
         return 1
-
-    if (total := stone_length_lookup.get((stone, number_of_iterations))) is not None:
-        return total
 
     total = sum(
         [
@@ -31,10 +28,10 @@ def number_of_final_stones(stone: int, number_of_iterations: int) -> int:
             for val in transform_stone(stone)
         ]
     )
-    stone_length_lookup[(stone, number_of_iterations)] = total
     return total
 
 
+@cache
 def transform_stone(value: int) -> list[int]:
     match value:
         case 0:
