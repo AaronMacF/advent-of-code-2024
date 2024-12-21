@@ -17,7 +17,7 @@ class ClawMachine:
     prize: tuple[int, int]
 
 
-def run_day_13_part_1():
+def run_day_13_part_2():
     filepath = get_root_filepath() + "day13/the_claw.txt"
     tokens_needed = 0
     with open(filepath, "r") as file:
@@ -55,7 +55,7 @@ def parse_prize(line: str) -> tuple[int, int]:
     y_pattern = r"Y=(\d+)"
     x_total = int(re.search(x_pattern, line)[1])
     y_total = int(re.search(y_pattern, line)[1])
-    return (x_total, y_total)
+    return (x_total + 10000000000000, y_total + 10000000000000)
 
 
 def build_matrix_from_claw_machine(claw_machine: ClawMachine) -> list[list[str]]:
@@ -66,4 +66,4 @@ def build_matrix_from_claw_machine(claw_machine: ClawMachine) -> list[list[str]]
 
 
 if __name__ == "__main__":
-    run_day_13_part_1()
+    run_day_13_part_2()

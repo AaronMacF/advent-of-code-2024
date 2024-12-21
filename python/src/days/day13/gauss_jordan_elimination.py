@@ -1,7 +1,9 @@
-# Python3 Implementation for Gauss-Jordan
-# Elimination Method
+# Python3 Implementation for Gauss-Jordan Elimination Method
 # Modified version of code from https://www.geeksforgeeks.org/program-for-gauss-jordan-elimination-method/
-# This code is contributed by phasing17
+# The original code is contributed by phasing17
+
+
+from typing import Union
 
 
 N = 2
@@ -67,14 +69,31 @@ def CheckConsistency(a, n, flag):
     return flag
 
 
-def get_result(a, n) -> list[int]:
-    return [round(a[i][n] / a[i][i]) for i in range(n)]
+def get_result(a, n) -> list[float]:
+    return [a[i][n] / a[i][i] for i in range(n)]
+
+
+def get_result_as_list_of_int(matrix: list[float]) -> Union[None, list[int]]:
+    tolerance = (
+        0.001  # if number is within 0.001 of an integer, assume it is an integer
+    )
+    rounded_values = list(map(round, matrix))
+    if all(
+        [
+            abs(value - rounded_value) < tolerance
+            for (value, rounded_value) in zip(matrix, rounded_values)
+        ]
+    ):
+        return rounded_values
+    return None
 
 
 # Driver code
-def find_button_presses(matrix: list[list[str]]):
+def find_button_presses(matrix: list[list[str]]) -> Union[None, list[int]]:
     # matrix e.g. [[94, 22, 8400], [34, 67, 5400]]
     flag = PerformOperation(matrix, N)
-    if flag == 0:
+    if flag != 0:
         return None
-    return get_result(matrix, N)
+    result = get_result(matrix, N)
+    integer_result = get_result_as_list_of_int(result)
+    return integer_result
